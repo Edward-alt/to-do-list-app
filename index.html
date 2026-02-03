@@ -1,21 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>To-do List</title>
-<link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personalized Planner</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="app">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Personalized productivity</p>
+        <h1>My Smart To-Do Planner</h1>
+        <p class="subtitle">Schedule tasks for today, this week, or years ahead with a flexible planner that adapts to you.</p>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" class="ghost-btn" type="button">Toggle theme</button>
+        <a class="primary-btn" href="https://calendar.google.com/calendar/u/0/r" target="_blank" rel="noreferrer">Connect Google Calendar</a>
+      </div>
+    </header>
 
-<div class="container">
-    <h1>My To-do List</h1>
-    <input type="text" id="new-item" placeholder="Enter a new item">
-    <button onclick="addItem()">Add</button>
-    <ul id="todo-list">
-    </ul>
-</div>
+    <section class="stats">
+      <div class="stat-card">
+        <h3 id="stat-total">0</h3>
+        <p>Total tasks</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="stat-upcoming">0</h3>
+        <p>Upcoming this week</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="stat-completed">0</h3>
+        <p>Completed</p>
+      </div>
+      <div class="stat-card">
+        <h3 id="stat-overdue">0</h3>
+        <p>Overdue</p>
+      </div>
+    </section>
 
+    <main class="layout">
+      <section class="panel">
+        <h2>Create a task</h2>
+        <form id="task-form">
+          <div class="field">
+            <label for="title">Task title</label>
+            <input id="title" name="title" type="text" placeholder="Plan a workout, finish proposal..." required>
+          </div>
+          <div class="field">
+            <label for="description">Details</label>
+            <textarea id="description" name="description" rows="3" placeholder="Add context, links, or notes"></textarea>
+          </div>
+          <div class="grid two">
+            <div class="field">
+              <label for="date">Date</label>
+              <input id="date" name="date" type="date">
+            </div>
+            <div class="field">
+              <label for="time">Time</label>
+              <input id="time" name="time" type="time">
+            </div>
+          </div>
+          <div class="grid three">
+            <div class="field">
+              <label for="duration">Duration</label>
+              <select id="duration" name="duration">
+                <option value="">Flexible</option>
+                <option value="15 min">15 min</option>
+                <option value="30 min">30 min</option>
+                <option value="1 hr">1 hour</option>
+                <option value="2 hr">2 hours</option>
+                <option value="Half day">Half day</option>
+                <option value="Full day">Full day</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="repeat">Repeat</label>
+              <select id="repeat" name="repeat">
+                <option value="None">No repeat</option>
+                <option value="Daily">Daily</option>
+                <option value="Weekly">Weekly</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Yearly">Yearly</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="priority">Priority</label>
+              <select id="priority" name="priority">
+                <option value="Low">Low</option>
+                <option value="Medium" selected>Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="field">
+              <label for="category">Category</label>
+              <input id="category" name="category" type="text" placeholder="Work, Personal, Health">
+            </div>
+            <div class="field">
+              <label for="tags">Tags</label>
+              <input id="tags" name="tags" type="text" placeholder="#presentation #emails">
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="field">
+              <label for="color">Accent color</label>
+              <input id="color" name="color" type="color" value="#6c5ce7">
+            </div>
+            <div class="field inline">
+              <label for="reminder">Reminders</label>
+              <div class="toggle">
+                <input id="reminder" name="reminder" type="checkbox" checked>
+                <span>Enable gentle reminder</span>
+              </div>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary-btn" type="submit" id="save-task">Add task</button>
+            <button class="ghost-btn" type="button" id="reset-form">Reset</button>
+          </div>
+        </form>
+
+        <div class="panel footer">
+          <h3>Customize your workspace</h3>
+          <div class="grid two">
+            <div class="field">
+              <label for="accent">App accent</label>
+              <input id="accent" type="color" value="#6c5ce7">
+            </div>
+            <div class="field">
+              <label for="density">Density</label>
+              <select id="density">
+                <option value="comfortable">Comfortable</option>
+                <option value="compact">Compact</option>
+              </select>
+            </div>
+          </div>
+          <div class="quick-actions">
+            <button class="ghost-btn" type="button" id="clear-completed">Clear completed</button>
+            <button class="ghost-btn" type="button" id="seed-demo">Add sample tasks</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Task timeline</h2>
+          <p>Filter by day, week, month, or year, then export to Google Calendar with one click.</p>
+        </div>
+
+        <div class="filters">
+          <div class="field">
+            <label for="search">Search</label>
+            <input id="search" type="text" placeholder="Search tasks, tags, or notes">
+          </div>
+          <div class="field">
+            <label for="range">Range</label>
+            <select id="range">
+              <option value="all">All</option>
+              <option value="today">Today</option>
+              <option value="week">This week</option>
+              <option value="month">This month</option>
+              <option value="year">This year</option>
+              <option value="overdue">Overdue</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="all">All</option>
+              <option value="open">Open</option>
+              <option value="done">Completed</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="sort">Sort</label>
+            <select id="sort">
+              <option value="date-asc">Soonest</option>
+              <option value="date-desc">Latest</option>
+              <option value="priority">Priority</option>
+              <option value="created">Recently added</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="task-list" class="task-list"></div>
+      </section>
+    </main>
+  </div>
 </body>
 </html>
